@@ -22,17 +22,21 @@ def fProcess():
     cnt+=1
 
     received_response = client.message(client_query)
-    Wit_Responses.append(received_response)
 
     #print(received_response['entities'])
-    entity = None
-    value = None
-    try:
-        entity = list(received_response['entities'])[0]
-        value = received_response['entities'][entity][0]['value']
-    except:
-        pass
-    return (entity,value)
+
+    print(len(received_response['entities']))
+
+    for i in range(len(received_response['entities'])):
+        entity = None
+        value = None
+        try:
+            entity = list(received_response['entities'])[i]
+            value = received_response['entities'][entity][0]['value']
+        except:
+            pass
+        Wit_Responses.append([entity,value])
+    return render_template('sam.html',my_list = Wit_Responses)
 
 
 if __name__=='__main__':
